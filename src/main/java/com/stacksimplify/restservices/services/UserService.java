@@ -7,14 +7,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.stacksimplify.restservices.entities.User;
+import com.stacksimplify.restservices.exceptions.UserExistsException;
+import com.stacksimplify.restservices.exceptions.UserNotFoundException;
 import com.stacksimplify.restservices.repositories.UserRepository;
 
 @Service
-//@Transactional
+@Transactional
 public class UserService {
 
 	@Autowired
@@ -24,7 +28,11 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	//Create users
-	public User createUser(User user) {
+	public User createUser(User user) throws UserExistsException {
+		User existinguser=userRepository.findByUsername(user.getUsername());
+		if(existinguser!=null) {
+			throw new UserExistsException("user already exists");
+		}
 		return userRepository.save(user);
 	}
 @PersistenceContext
@@ -59,8 +67,11 @@ public User createUserOption3(String username,String firstname,String lastname,S
 	
 	}
 	// get uder by id
-	public Optional<User> getUserById(Long id) {
+	public Optional<User> getUserById(Long id) throws UserNotFoundException {
 		Optional<User> user = userRepository.findById(id);
+		if (!user.isPresent()) {
+			throw new UserNotFoundException("the user is not present in user repository");
+		}
 		return user;
 	}
 	//get user by username
@@ -78,11 +89,15 @@ public User createUserOption3(String username,String firstname,String lastname,S
 		}
 	
 	//update user by id
-	public User updateuUserById(Long id, User user) {
-		user.setId(id);
-		return userRepository.save(user);
-		
-	}
+		public User updateuUserById (Long id, User user)throws UserNotFoundException {
+			Optional<User> optionaluser = userRepository.findById(id);
+			if(!optionaluser.isPresent()) {
+				throw new UserNotFoundException("user not available, provide valid id");
+			}
+			user.setId(id);
+			return userRepository.save(user);
+
+		}
 	//update user by id(the varaiables are passed from a consuming client)
 	public User updateUserByIdfromClient(Long id,String username,String firstname,String lastname,String email,String role,String ssn) {
 		User user=new User();
@@ -99,9 +114,14 @@ public User createUserOption3(String username,String firstname,String lastname,S
 	
 	//delete user by id
 	public void deleteUserById(Long id) {
-		if(userRepository.findById(id).isPresent()) {
-		userRepository.deleteById(id);
+//		if(userRepository.findById(id).isPresent()) {
+//		userRepository.deleteById(id);
+//		}
+		Optional<User> optionaluser = userRepository.findById(id);
+		if(!optionaluser.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"user not available, provide valid id");
 		}
-	}
+		userRepository.deleteById(id);
+}
 
 }
