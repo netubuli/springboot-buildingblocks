@@ -66,7 +66,7 @@ public User createUserOption3(String username,String firstname,String lastname,S
 	return userRepository.save(user);
 	
 	}
-	// get uder by id
+	// get user by id
 	public Optional<User> getUserById(Long id) throws UserNotFoundException {
 		Optional<User> user = userRepository.findById(id);
 		if (!user.isPresent()) {
