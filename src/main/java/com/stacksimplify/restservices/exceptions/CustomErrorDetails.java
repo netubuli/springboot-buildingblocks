@@ -15,7 +15,7 @@ public class CustomErrorDetails {
 		this.message = message;
 		this.errorDetails = errorDetails;
 	}
-	//getters
+	//getters and
 	public Date getTimestamp() {
 		return timestamp;
 	}
