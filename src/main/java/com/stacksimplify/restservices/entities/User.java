@@ -11,11 +11,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Resource;
+import org.springframework.hateoas.RepresentationModel;
+
+//import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Resource;
+
+//import org.springframework.hateoas.ResourceSupport;
+
 
 @Entity
 @Table
-public class User {
-	
+public class User extends RepresentationModel<User> {
+//public class User{
 	@Id
 	@GeneratedValue
 	private Long id;
