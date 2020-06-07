@@ -9,13 +9,15 @@ import javax.persistence.Table;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
 
 //import com.stacksimplify.restservices.entities.User;
 
 @Entity
 @Table(name="orders")
-//public class Order extends RepresentationModel<Order>{
+//@JsonFilter(value="orderFilter")--for use with fields with Hashset
 public class Order extends RepresentationModel<Order>{
 	@Id
 	@GeneratedValue
