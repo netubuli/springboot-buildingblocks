@@ -11,7 +11,9 @@ import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
+
 
 //import com.stacksimplify.restservices.entities.User;
 
@@ -21,7 +23,9 @@ import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
 public class Order extends RepresentationModel<Order>{
 	@Id
 	@GeneratedValue
+	@JsonView(Views.Internal.class)
 	private Long orderid;
+	//@JsonView(Views.Internal.class)
 	private String orderdescription;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
