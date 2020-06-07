@@ -14,6 +14,9 @@ import javax.validation.constraints.Size;
 import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Resource;
 import org.springframework.hateoas.RepresentationModel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 //import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Resource;
 
 //import org.springframework.hateoas.ResourceSupport;
@@ -21,6 +24,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"firstname","lastname"})
 public class User extends RepresentationModel<User> {
 //public class User{
 	@Id
@@ -42,6 +46,7 @@ public class User extends RepresentationModel<User> {
 	private String role;
 	
 	@Column(name="SSN", length=50, nullable=false, unique=true)
+	@JsonIgnore
 	private String ssn;
 	
 	@OneToMany(mappedBy="user")
