@@ -76,6 +76,7 @@ public class UserController {
 			@PathParam("ssn") String ssn) {
 		return userService.createUserOption3(username, firstname, lastname, email, role, ssn);
 	}
+	//Get User by Id
 	//@GetMapping(path="/users/{id}")
 	@GetMapping(path="/{id}")
 	public Optional<User> getUserById(@PathVariable("id") @Min(1) Long id) {
