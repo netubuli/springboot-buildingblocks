@@ -18,14 +18,13 @@ public class UserMapStructController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired 
-	private UserMapper userMapper;
-	
-	@GetMapping
-	public List<UserMsDto> getAllUserDtos() {
-		return userMapper.usersToMsDto(userRepository.findAll());
-		
-	}
+//	//@Autowired 
+//	private UserMapper userMapper;
+//	
+//	@GetMapping
+//	public List<UserMsDto> getAllUserDtos() {		
+//		return userMapper.usersToMsDto(userRepository.findAll());	
+//		}
 
 	
 }
