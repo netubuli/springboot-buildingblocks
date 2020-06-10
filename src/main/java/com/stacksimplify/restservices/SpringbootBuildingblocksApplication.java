@@ -14,6 +14,9 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
+import com.stacksimplify.restservices.controllers.UserMapStructController;
+import com.stacksimplify.restservices.mappers.UserMapper;
+
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = { ErrorMvcAutoConfiguration.class })
@@ -38,5 +41,6 @@ public class SpringbootBuildingblocksApplication {
 		messageSource.setBasename("messages");
 		return messageSource;
 	}
-
+	
+	 
 }
