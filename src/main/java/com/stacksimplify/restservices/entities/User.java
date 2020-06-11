@@ -66,14 +66,25 @@ public class User extends RepresentationModel<User> {
 	@JsonView(Views.Internal.class)
 	private List<Order> orders;
 
+	
+	/*added to demo versioning*/
+	@Column(name="ADDRESS")
+	private String address;
+	
 	//no argument cnstructor(mandatory)
 	public User() {
 		
 	}
 	//fields constructor(not mandatory)
 	
-	public User(Long id, String username, String firstname, String lastname, String email, String role, String ssn) {
-		
+	
+
+	
+
+	public User(Long id, @NotEmpty(message = "Username is a mandatory field") String username,
+			@Size(min = 2, message = "firstname must be atleast 2 characters") String firstname, String lastname,
+			String email, String role, String ssn, List<Order> orders, String address) {
+		super();
 		this.id = id;
 		this.username = username;
 		this.firstname = firstname;
@@ -81,13 +92,14 @@ public class User extends RepresentationModel<User> {
 		this.email = email;
 		this.role = role;
 		this.ssn = ssn;
+		this.orders = orders;
+		this.address = address;
 	}
-
+	
 	//setters and getters (mandatory)
-	public Long getId() {
-		return id;
-	}
-
+		public Long getId() {
+			return id;
+		}
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -148,11 +160,34 @@ public class User extends RepresentationModel<User> {
 		this.orders = orders;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+
+
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+
+
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", email=" + email + ", role=" + role + ", ssn=" + ssn + "]";
+				+ ", email=" + email + ", role=" + role + ", ssn=" + ssn + ", orders=" + orders + ", address=" + address
+				+ "]";
 	}
+
+
+
+
+
+	
 	
 	
 	
