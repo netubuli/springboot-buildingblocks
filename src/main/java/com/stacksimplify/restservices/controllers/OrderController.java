@@ -47,15 +47,15 @@ public class OrderController {
 		return optionalUser.get().getOrders();
 	}
 	
-	@GetMapping("/{id}/orders")
-	public List<Order> getAllOrders(@PathVariable("id") Long id) {
-		try {
-		return orderService.getAllOrders(id);
-		}catch (Exception ex) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
-			
-		}
-	}
+//	@GetMapping("/{id}/orders")
+//	public List<Order> getAllOrders(@PathVariable("id") Long id) {
+//		try {
+//		return orderService.getAllOrders(id);
+//		}catch (Exception ex) {
+//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+//			
+//		}
+//	}
 	@PostMapping("{userid}/orders")
 	public Order createOrder(@PathVariable Long userid,@RequestBody Order order)throws UserNotFoundException  {
 		 Optional<User> optionalUser=userRepository.findById(userid);

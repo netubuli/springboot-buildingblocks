@@ -19,67 +19,67 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 //import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Resource;
 
 //import org.springframework.hateoas.ResourceSupport;
-
-
+@ApiModel(description = "This model is to create a user")
 @Entity
 @Table
 //@JsonIgnoreProperties({"firstname","lastname"})  part of static filtering JSONIgnore
 //@JsonFilter(value="userFilter") used for mappingJacksonValue filtering
 public class User extends RepresentationModel<User> {
 //public class User{
+	@ApiModelProperty(notes = " Auto generated unique id", required = true, position = 1)
 	@Id
 	@GeneratedValue
 	@JsonView(Views.External.class)
 	private Long id;
-	
-	@NotEmpty(message="Username is a mandatory field")
-	@Column(name="USER_NAME", length=50, nullable=false, unique=true)
+
+	@ApiModelProperty(notes = "username should be in format flname", example = "netubuli", required = false, position = 2)
+	@NotEmpty(message = "Username is a mandatory field")
+	@Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
 	@JsonView(Views.External.class)
 	private String username;
-	
-	@Size(min=2,message="firstname must be atleast 2 characters")
+
+	@Size(min = 2, message = "firstname must be atleast 2 characters")
 	@JsonView(Views.External.class)
-	@Column(name="FIRST_NAME", length=50, nullable=false)
-	
+	@Column(name = "FIRST_NAME", length = 50, nullable = false)
+
 	private String firstname;
-	@Column(name="LAST_NAME", length=50, nullable=false)
+	@Column(name = "LAST_NAME", length = 50, nullable = false)
 	@JsonView(Views.External.class)
 	private String lastname;
-	
-	@Column(name="EMAIL", length=50, nullable=false)
+
+	@Column(name = "EMAIL", length = 50, nullable = false)
 	@JsonView(Views.External.class)
 	private String email;
-	
-	@Column(name="ROLE", length=50, nullable=false)
+
+	@Column(name = "ROLE", length = 50, nullable = false)
 	@JsonView(Views.Internal.class)
 	private String role;
-	
-	@Column(name="SSN", length=50, nullable=false, unique=true)
-	//@JsonIgnore  part of static filtering JSONIgnore
+
+	@Size(min = 2, max = 50)
+	@Column(name = "SSN", length = 50, nullable = false, unique = true)
+	// @JsonIgnore part of static filtering JSONIgnore
 	@JsonView(Views.Internal.class)
 	private String ssn;
-	
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
 	@JsonView(Views.Internal.class)
 	private List<Order> orders;
 
-	
-	/*added to demo versioning*/
-	@Column(name="ADDRESS")
+	/* added to demo versioning */
+	@Column(name = "ADDRESS")
 	private String address;
-	
-	//no argument cnstructor(mandatory)
-	public User() {
-		
-	}
-	//fields constructor(not mandatory)
-	
-	
 
-	
+	// no argument cnstructor(mandatory)
+	public User() {
+
+	}
+	// fields constructor(not mandatory)
 
 	public User(Long id, @NotEmpty(message = "Username is a mandatory field") String username,
 			@Size(min = 2, message = "firstname must be atleast 2 characters") String firstname, String lastname,
@@ -95,11 +95,12 @@ public class User extends RepresentationModel<User> {
 		this.orders = orders;
 		this.address = address;
 	}
-	
-	//setters and getters (mandatory)
-		public Long getId() {
-			return id;
-		}
+
+	// setters and getters (mandatory)
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -164,17 +165,9 @@ public class User extends RepresentationModel<User> {
 		return address;
 	}
 
-
-
-
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-
-
-
 
 	@Override
 	public String toString() {
@@ -182,14 +175,5 @@ public class User extends RepresentationModel<User> {
 				+ ", email=" + email + ", role=" + role + ", ssn=" + ssn + ", orders=" + orders + ", address=" + address
 				+ "]";
 	}
-
-
-
-
-
-	
-	
-	
-	
 
 }
